@@ -30,6 +30,8 @@ while running:
 
     game.player.all_projectiles.draw(screen)
 
+    game.all_monsters.draw(screen)
+
     # check if player go to right or left
     if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x + game.player.rect.width < screen.get_width():
         game.player.move_right()
