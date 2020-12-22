@@ -1,4 +1,5 @@
 import pygame
+import math
 from game import Game
 pygame.init()
 
@@ -9,6 +10,17 @@ screen = pygame.display.set_mode((1080, 720))
 
 # import background window
 background = pygame.image.load('assets/bg.jpg')
+
+banner = pygame.image.load('assets/banner.png')
+banner = pygame.transform.scale(banner, (500, 500))
+banner_rect = banner.get_rect()
+banner_rect.x = math.ceil(screen.get_width() / 4)
+
+play_button = pygame.image.load('assets/button.png')
+play_button = pygame.transform.scale(play_button, (400, 150))
+play_button_rect = play_button.get_rect()
+play_button_rect.x = math.ceil(screen.get_width() / 3.33)
+play_button_rect.y = math.ceil(screen.get_height() / 2)
 
 # load game
 game = Game()
@@ -21,28 +33,12 @@ while running:
     # apply game background
     screen.blit(background, (0, -200))
 
-    # apply player image
-    screen.blit(game.player.image, game.player.rect)
+    if game.is_playing:
+        game.update(screen)
 
-    game.player.update_health_bar(screen)
-
-    # get player projectile
-    for projectile in game.player.all_projectiles:
-        projectile.move()
-
-    for monster in game.all_monsters:
-        monster.forward()
-        monster.update_health_bar(screen)
-
-    game.player.all_projectiles.draw(screen)
-
-    game.all_monsters.draw(screen)
-
-    # check if player go to right or left
-    if game.pressed.get(pygame.K_RIGHT) and game.player.rect.x + game.player.rect.width < screen.get_width():
-        game.player.move_right()
-    elif game.pressed.get(pygame.K_LEFT) and game.player.rect.x > 0:
-        game.player.move_left()
+    else:
+        screen.blit(play_button, play_button_rect)
+        screen.blit(banner, banner_rect)
 
     # maj l'ecran
     pygame.display.flip()
@@ -62,3 +58,6 @@ while running:
         elif event.type == pygame.KEYUP:
             game.pressed[event.key] = False
 
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            if play_button_rect.collidepoint(event.pos):
+                game.is_playing = True
