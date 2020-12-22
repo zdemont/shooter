@@ -13,8 +13,16 @@ class Game:
 
         self.all_monsters = pygame.sprite.Group()
         self.pressed = {}
+
+    def start(self):
+        self.is_playing = True
         self.spawn_monster()
         self.spawn_monster()
+
+    def game_over(self):
+        self.all_players = pygame.sprite.Group()
+        self.player.health = self.player.max_health
+        self.is_playing = False
 
     def update(self, screen):
           # apply player image
