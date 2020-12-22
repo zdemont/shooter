@@ -15,8 +15,6 @@ class Monster(pygame.sprite.Sprite):
         self.rect.y = 540
         self.velocity = 2
 
-    
-
     def update_health_bar(self, surface):
         bar_color = (111, 210, 46)
         back_bar_color = (60, 63, 60)
@@ -26,7 +24,6 @@ class Monster(pygame.sprite.Sprite):
 
         pygame.draw.rect(surface, back_bar_color, back_bar_position)
         pygame.draw.rect(surface, bar_color, bar_position)
-
 
     def forward(self):
         if not self.game.check_collision(self, self.game.all_players):
