@@ -24,6 +24,8 @@ while running:
     # apply player image
     screen.blit(game.player.image, game.player.rect)
 
+    game.player.update_health_bar(screen)
+
     # get player projectile
     for projectile in game.player.all_projectiles:
         projectile.move()
